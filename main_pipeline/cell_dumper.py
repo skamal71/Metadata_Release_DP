@@ -1,6 +1,6 @@
 """
 Adapter to dump per-cell (U_i, Gamma_i) data from existing evaluation
-pipeline into the cells.json format.
+pipeline into the cells.json format expected by run_experiment.py.
 
 """
 

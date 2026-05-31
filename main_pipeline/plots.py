@@ -37,8 +37,8 @@ def plot_algorithm_showdown(csv_filepath):
         y='Average Utility', 
         hue='Algorithm',
         palette=['#1f77b4', '#7f7f7f', '#d3d3d3'],
-        errorbar='se',      # Adds the SEM error bars Professor Chenxi asked for!
-        capsize=0.05,       # Adds little caps to the error bars
+        errorbar='se',     
+        capsize=0.05,    
         err_kws={'linewidth': 1.5, 'color': 'black'}
     )
 
