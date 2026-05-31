@@ -80,11 +80,11 @@ def run_base_mechanism(cell_data):
 
 
 # ==========================================
-# PROVENANCE MECHANISMS K(X, Y)
+# METADATA MECHANISMS K(X, Y)
 # ==========================================
-def generate_provenance(cell_data, f_X, Y, true_noise):
+def generate_metadata(cell_data, f_X, Y, true_noise):
     """
-    Generates all six candidate provenance fields.
+    Generates all six candidate metadata fields.
     
     tau_agg_comp   : config string (zero cost)
     tau_noise      : K_noise(X,Y)  = (Y - f(X)) + Lap(C / Gamma_noise)
@@ -148,7 +148,7 @@ def calculate_utilities(cell_data, f_X, Y, traces):
     y_above_grid = Y > (f_max + degenerate_threshold)
     y_is_degenerate = y_below_grid or y_above_grid
 
-    ## Before Provenance: compute posterior P(f(X) | Y) and its variance
+    ## Before Metadata: compute posterior P(f(X) | Y) and its variance
     ## In the normal case, var_base = Var(f(X)|Y) || In the degenerate case, var_base = Var(Uniform[0, f_max])
     if y_is_degenerate:
         # Y is an extreme outlier — use a Uniform prior as the baseline.
@@ -350,7 +350,7 @@ def run_budget_sweep(grid_data, cell_totals, costs):
         
         # 1. Generate base mechanisms (only need to do this once per cell)
         f_X, Y, true_noise = run_base_mechanism(cell_data)
-        traces = generate_provenance(cell_data, f_X, Y, true_noise)
+        traces = generate_metadata(cell_data, f_X, Y, true_noise)
         utilities, _, _ = calculate_utilities(cell_data, f_X, Y, traces)
         
         # 2. Test this cell against every budget level
@@ -406,9 +406,9 @@ def run_scalability_test(filepath, costs, budget):
             f_X, Y, true_noise = run_base_mechanism(cell_data)
             t_traditional += (time.perf_counter() - t0)
             
-            # 2. Proposed Framework Time (Provenance + Utility + Knapsack)
+            # 2. Proposed Framework Time (Metadata + Utility + Knapsack)
             t1 = time.perf_counter()
-            traces = generate_provenance(cell_data, f_X, Y, true_noise)
+            traces = generate_metadata(cell_data, f_X, Y, true_noise)
             utilities, _, _ = calculate_utilities(cell_data, f_X, Y, traces)
             knapsack_optimize(utilities, costs, budget)
             t_proposed += (time.perf_counter() - t1)
@@ -443,7 +443,7 @@ def main():
 
     print(f"Total Budget  (epsilon_total)  : {EPSILON_TOTAL}")
     print(f"Query Budget  (epsilon_query)  : {EPSILON_QUERY}")
-    print(f"Provenance Budget (ep_remain)  : {EPSILON_REMAIN}")
+    print(f"Metadata Budget (ep_remain)  : {EPSILON_REMAIN}")
     print(f"Field costs   (Gamma_i)        : {COSTS}")
     """
     print(f"Max affordable subset cost     : "
@@ -466,7 +466,7 @@ def main():
         for _ in range(trials):
             # 1. Generate fresh noise and traces for this trial
             _, Y, true_noise = run_base_mechanism(cell_data)
-            traces = generate_provenance(cell_data, f_X, Y, true_noise)
+            traces = generate_metadata(cell_data, f_X, Y, true_noise)
             utilities, var_base, degenerate = calculate_utilities(cell_data, f_X, Y, traces)
             
             # 2. Run optimizers
@@ -493,7 +493,7 @@ def main():
             'True_Sum': f_X,
             'DP_Output_Mean': np.mean(dp_outputs),
             'Var_Base_Mean': np.mean(base_vars),
-            'Traditional_DP_Utility': 0.0,  # No provenance => no variance reduction by definition
+            'Traditional_DP_Utility': 0.0,  # No metadata => no variance reduction by definition
             'Knapsack_Mean': np.mean(k_scores),
             'Knapsack_SEM': st.sem(k_scores),
             'Greedy_Mean': np.mean(g_scores),
@@ -556,7 +556,7 @@ def main():
               f"& ${dr['Knapsack_Mean'].mean():.2f} \\pm {st.sem(dr['Knapsack_Mean']):.2f}$ \\\\")
     
     print("\n=== GLOBAL PERFORMANCE OVERALL ===")
-    print(f"Traditional DP   : 0.0000 (no provenance released)")
+    print(f"Traditional DP   : 0.0000 (no metadata released)")
     print(f"Random Baseline  : {df_res['Random_Mean'].mean():.4f}")
     print(f"Greedy Selector  : {df_res['Greedy_Mean'].mean():.4f}")
     print(f"Knapsack Selector: {df_res['Knapsack_Mean'].mean():.4f}")

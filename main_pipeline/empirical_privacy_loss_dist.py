@@ -1,7 +1,7 @@
 """
 Empirical Privacy Loss Distribution
 ====================================
-For each provenance field K_i, computes the pairwise log-likelihood ratio:
+For each metadata field K_i, computes the pairwise log-likelihood ratio:
  
     |log Pr[K(x,m)=t] / Pr[K(x',m)=t]|
  
@@ -245,7 +245,7 @@ def run_experiment(filepath='tax.csv'):
                 transform=ax.transAxes, ha='right', va='top', fontsize=8,
                 bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
  
-    plt.suptitle('Empirical privacy loss distribution across all provenance fields',
+    plt.suptitle('Empirical privacy loss distribution across all metadata fields',
                  fontweight='bold', fontsize=13, y=1.04)
     plt.tight_layout()
     plt.savefig('plot_PL_distribution_all_fields.pdf', format='pdf', dpi=300, bbox_inches='tight')

@@ -132,7 +132,7 @@ def plot_budget_tradeoff(csv_filepath):
     ax.set_yscale('log')
     
     plt.title('Privacy vs. Utility Trade-off', pad=15, fontweight='bold')
-    plt.xlabel(r'Available Provenance Budget ($\epsilon_{remain}$)', fontweight='bold')
+    plt.xlabel(r'Available Epsilon Remain Budget ($\epsilon_{remain}$)', fontweight='bold')
     plt.ylabel('Avg Posterior Variance Reduction (Log Scale)', fontweight='bold')
     plt.legend(title='Selection Method', frameon=True)
     
