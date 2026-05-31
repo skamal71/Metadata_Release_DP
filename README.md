@@ -25,7 +25,6 @@ Metadata_Release_DP/
 │  ├─ dp_metadata_pipeline.py
 │  ├─ empirical_privacy_loss_dist.py
 │  ├─ plots.py
-│  ├─ tax.csv
 │  └─ ...
 ├─ .gitignore
 └─ README.md
@@ -78,6 +77,10 @@ python -m pip install numpy pandas scipy matplotlib seaborn
 ```
 
 ## How to run
+
+Before running the pipeline, download the Rome taxi dataset from CRAWDAD and save it as `main_pipeline/tax.csv`.
+
+- CRAWDAD Rome Taxi Dataset: https://ieee-dataport.org/open-access/crawdad-romataxi
 
 The code is written to execute from within `main_pipeline/`.
 
