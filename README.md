@@ -1,4 +1,4 @@
-# Metadata Release Differential Privacy Pipeline
+# Metadata Release Under Differential Privacy Pipeline
 
 This repository contains an experimental pipeline for evaluating provenance-aware differential privacy mechanisms over taxi GPS data. The code implements a noise-addition baseline plus a provenance selection layer that uses utility estimation and knapsack + Greedy optimization.
 
